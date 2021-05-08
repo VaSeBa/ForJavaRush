@@ -6,40 +6,33 @@ import java.util.Date;
 @Entity
 @Table(name = "player")
 public class Player {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "title")
     private String title;
+    private Integer experience;
+    private Integer level;
+    private Integer untilNextLevel;
+    private Boolean banned;
 
-    @Column(name = "race")
+    @Enumerated(EnumType.STRING)
     private Race race;
 
-    @Column(name = "profession")
+    @Enumerated(EnumType.STRING)
     private Profession profession;
 
-    @Column(name = "experience")
-    private int experience;
-
-    @Column(name = "level")
-    private int level;
-
-    @Column(name = "untilNextLevel")
-    private int untilNextLevel;
-
+    @Temporal(TemporalType.DATE)
     private Date birthday;
-    private boolean banned;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,27 +68,27 @@ public class Player {
         this.profession = profession;
     }
 
-    public int getExperience() {
+    public Integer getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
+    public void setExperience(Integer experience) {
         this.experience = experience;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
-    public int getUntilNextLevel() {
+    public Integer getUntilNextLevel() {
         return untilNextLevel;
     }
 
-    public void setUntilNextLevel(int untilNextLevel) {
+    public void setUntilNextLevel(Integer untilNextLevel) {
         this.untilNextLevel = untilNextLevel;
     }
 
@@ -107,12 +100,13 @@ public class Player {
         this.birthday = birthday;
     }
 
-    public boolean isBanned() {
+    public Boolean getBanned() {
         return banned;
     }
 
-    public void setBanned(boolean banned) {
+    public void setBanned(Boolean banned) {
         this.banned = banned;
     }
-
 }
+
+
