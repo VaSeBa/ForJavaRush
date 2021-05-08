@@ -54,14 +54,18 @@ public class PlayerService {
                 isValidTitle(player.getTitle()) &&
                 isValidDate(player.getBirthday()) &&
                 isValidExperience(player.getExperience())) {
-            player.setLevel((int) ((Math.sqrt(2500 + 200 * player.getExperience()) - 50) / 100));
-            player.setUntilNextLevel(50 * (player.getLevel() + 1) * (player.getLevel() + 2) - player.getExperience());
-            playerRepository.save(player);
-
-            return player;
+            return experienceCounter(player);
         }
         else throw new HttpStatusBadRequest();
 
+    }
+
+    private Player experienceCounter(Player player) {
+        player.setLevel((int) ((Math.sqrt(2500 + 200 * player.getExperience()) - 50) / 100));
+        player.setUntilNextLevel(50 * (player.getLevel() + 1) * (player.getLevel() + 2) - player.getExperience());
+        playerRepository.save(player);
+
+        return player;
     }
 
     public Player updatePlayer(Player afterUpdate, Player beforeUpdate) {
@@ -82,11 +86,7 @@ public class PlayerService {
             } else throw new HttpStatusBadRequest();
         }
 
-        afterUpdate.setLevel((int) ((Math.sqrt(2500 + 200 * afterUpdate.getExperience()) - 50) / 100));
-        afterUpdate.setUntilNextLevel(50 * (afterUpdate.getLevel() + 1) * (afterUpdate.getLevel() + 2) - afterUpdate.getExperience());
-        playerRepository.save(afterUpdate);
-
-        return afterUpdate;
+        return experienceCounter(afterUpdate);
     }
 
     public void deletePlayer(Player player) {
@@ -107,7 +107,7 @@ public class PlayerService {
             throw new HttpStatusBadRequest();
         }
 
-        if(isValidId(player) == false) throw new HttpStatusBadRequest();
+        if(!isValidId(player)) throw new HttpStatusBadRequest();
 
         if (playerRepository.existsById(player)) {
             return playerRepository.findById(player).get();
@@ -188,15 +188,13 @@ public class PlayerService {
     }
 
     private boolean isValidParams(Player player) {
-        
-        if (player.getName() == null &&
-            player.getTitle() == null &&
-            player.getRace() == null &&
-            player.getProfession() == null &&
-            player.getBirthday() == null &&
-            player.getExperience() == null) return false;
 
-        else return true;
+        return player.getName() != null ||
+                player.getTitle() != null ||
+                player.getRace() != null ||
+                player.getProfession() != null ||
+                player.getBirthday() != null ||
+                player.getExperience() != null;
     }
 
 }

@@ -12,11 +12,22 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String name;
+
+    @Column
     private String title;
+
+    @Column
     private Integer experience;
+
+    @Column
     private Integer level;
+
+    @Column
     private Integer untilNextLevel;
+
+    @Column
     private Boolean banned;
 
     @Enumerated(EnumType.STRING)
