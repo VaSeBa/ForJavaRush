@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("rest")
 public class PlayerController {
     private final PlayerService playerService;
-
     @Autowired
     public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
@@ -56,4 +55,26 @@ public class PlayerController {
         return playerService.getAllPlayers(name, title, race, profession, after, before,
                 banned, minExperience, maxExperience, minLevel, maxLevel).size();
     }
+
+    @GetMapping("/players/{id}")
+    public Player getPlayer(@PathVariable(value = "id") String id){
+        return playerService.getPlayerById(id);
+    }
+
+    @PostMapping("/players")
+    public Player createPlayer(@RequestBody Player player) {
+        return playerService.createNewPlayer(player);
+    }
+
+    @PostMapping("/players/{id}")
+    public Player updatePlayer(@PathVariable (value = "id") String id,
+                               @RequestBody Player player){
+        return playerService.updatePlayer(playerService.getPlayerById(id), player);
+    }
+
+    @DeleteMapping("/players/{id}")
+    public void deletePlayer(@PathVariable (value = "id") String id){
+        playerService.deletePlayer(playerService.getPlayerById(id));
+    }
+
 }
